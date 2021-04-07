@@ -8,7 +8,7 @@ from auth_app import views as auth_views
 urlpatterns = [
     path('', auth_views.home, name='home'),
     path('admin/', admin.site.urls),
-    # path('edit-profile/', auth_views.edit_profile, name='edit-profile'),
+    path('edit-profile/', auth_views.edit_profile, name='edit-profile'),
     # AUTH
     path('register/', auth_views.register, name='register'),
     path('login/', django_auth_views.LoginView.as_view(template_name='auth_app/login.html'), name='login'),
@@ -26,6 +26,8 @@ urlpatterns = [
     path('password-reset-complete/',
          django_auth_views.PasswordResetCompleteView.as_view(template_name='auth_app/password_reset_complete.html'),
          name='password_reset_complete'),
+    # posts
+    path('post/', include('posts_app.urls')),
 
 ]
 

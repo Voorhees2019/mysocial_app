@@ -20,13 +20,14 @@ def register(request):
     return render(request, 'auth_app/register.html', {'form': form})
 
 
-# @login_required
-# def edit_profile(request):
-#     if request.method == 'POST':
-#         form = ProfileUpdateForm(request.POST, instance=request.user)
-#         if form.is_valid():
-#             form.save()
-#             messages.success(request, f'Your account has been updated')
-#             return redirect('profile')
-#     else:
-#         form = ProfileUpdateForm(instance=request.user)
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Your account has been updated')
+            return redirect('edit-profile')
+    else:
+        form = ProfileUpdateForm(instance=request.user.profile)
+    return render(request, 'auth_app/edit_profile.html', {'form': form})

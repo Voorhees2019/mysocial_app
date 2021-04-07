@@ -3,3 +3,4 @@ venv/
 *.pyc
 .idea/
 *.sqlite3
+media/profile_pic/
