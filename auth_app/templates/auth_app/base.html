@@ -22,28 +22,32 @@
         <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
                 {% if user.is_authenticated %}
-                    <a class="nav-item nav-link" href="{% url 'posts_app:home' %}">Home</a>
+                    <a class="nav-item nav-link" href="{% url 'posts_app:posts' %}">Posts</a>
                 {% else %}
                     <a class="nav-item nav-link" href="{% url 'home' %}">Home</a>
                 {% endif %}
+                <a class="nav-item nav-link" href="{% url 'about' %}">About</a>
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
+                <form class="form-inline" method="GET" action="{% url 'searchresult' %}">
+                    <input class="form-control mr-sm-2" type="search" name="q" required placeholder="Search"
+                           aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0 mr-5" type="submit">Search</button>
+                </form>
                 {% if user.is_authenticated %}
                     <div class="dropdown">
-                        <a class="nav-item nav-link dropdown-toggle" href="{% url 'edit-profile' %}" type="button" id="dropdownMenuButton"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-item nav-link dropdown-toggle" href="" type="button" id="dropdownMenuButton"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img src="{{ user.profile.profile_pic.url }}" class="rounded-circle" width="30px"></a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">My Profile</a>
+                            <a class="dropdown-item" href="" data-toggle="modal" data-target="#addPostModal">New
+                                Post</a>
+                            <a class="dropdown-item" href="{% url 'user-profile' user.username %}">My Profile</a>
                             <a class="dropdown-item" href="{% url 'edit-profile' %}">Edit Profile</a>
                             <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
                         </div>
                     </div>
-
-{#                    <a class="nav-item nav-link" href="{% url 'edit-profile' %}">#}
-{#                        <img src="{{ user.profile.profile_pic.url }}" class="rounded-circle" width="30px"></a>#}
-{#                    <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>#}
                 {% else %}
                     <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
                     <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
@@ -53,13 +57,38 @@
     </div>
 </nav>
 
+<!-- Modal -->
+<div class="modal fade" id="addPostModal" tabindex="-1" aria-labelledby="addPostModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addPostModalLabel">Add New Post</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" enctype="multipart/form-data" id="postForm">
+                    {% csrf_token %}
+                    {{ post_form.as_p }}
+                    {#                    <button class="btn btn-info" type="submit">Post</button>#}
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" name="addNewPost" form="postForm">Post</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container" style="padding-top: 20px;">
     {% if messages %}
         {% for message in messages %}
             <div class="alert alert-{{ message.tags }}">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                 <span aria-hidden="true">&times;</span>
-            </button>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
                 {{ message }}
             </div>
         {% endfor %}

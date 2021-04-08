@@ -1,0 +1,20 @@
+{% extends 'auth_app/base.html' %}
+
+{% block content %}
+    <div class="media">
+        <img src="{{ user_obj.profile.profile_pic.url }}" class="mr-3 rounded-circle" width="250px">
+        <div class="media-body">
+            <h1>{{ user_obj.username }}</h1>
+            <h2 class="text-center">{{ user_obj.post.count }} Post{{ user_obj.post.count|pluralize }} &nbsp
+                {{ user_obj.follower.count }} Follower{{ user_obj.follower.count|pluralize }} &nbsp
+                {{ user_obj.following.count }} Following{{ user_obj.following.count|pluralize }}</h2>
+            <h3>{{ user_obj.profile.full_name }}</h3>
+            <h5>{{ user_obj.profile.description }}</h5>
+        </div>
+    </div>
+    <div class="row">
+        {% for post in user_obj.post.all %}
+            <img src="{{ post.image.url }}" width="350px" height="400px">
+        {% endfor %}
+    </div>
+{% endblock %}

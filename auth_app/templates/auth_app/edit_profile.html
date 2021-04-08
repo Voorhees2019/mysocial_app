@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="media">
-        <img src="{{ user.profile.profile_pic.url }}" class="rounded-circle account-img">
+        <img src="{{ user.profile.profile_pic.url }}" class="rounded-circle">
         <div class="media-body">
             <h2 class="account-heading">{{ user.username }}</h2>
             <p class="text-secondary">{{ user.email }}</p>
@@ -17,7 +17,7 @@
             {{ form|crispy }}
         </fieldset>
         <div class="form-group">
-            <button class="btn btn-outline-info" type="submit">Update</button>
+            <button class="btn btn-outline-info" type="submit" name="editProfile">Update</button>
         </div>
     </form>
 {% endblock %}
