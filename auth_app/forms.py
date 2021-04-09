@@ -16,3 +16,6 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         exclude = ('user', )
+        widgets = {
+            'description': forms.Textarea(attrs={'rows': 5})
+        }

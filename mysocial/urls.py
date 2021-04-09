@@ -29,8 +29,9 @@ urlpatterns = [
          name='password_reset_complete'),
     # posts
     path('posts/', include('posts_app.urls')),
-    path('about/', auth_views.about, name='about'),
     path('user/<str:username>/', auth_views.user, name='user-profile'),
+    path('follow/<str:username>/', auth_views.follow, name='follow'),
+    path('unfollow/<str:username>/', auth_views.unfollow, name='unfollow'),
     path('searchresult/', auth_views.searchresult, name='searchresult'),
 
 ]

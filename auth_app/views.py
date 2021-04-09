@@ -3,6 +3,7 @@ from .forms import UserRegisterForm, ProfileUpdateForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from .models import Follow
 
 
 def home(request):
@@ -18,10 +19,6 @@ def searchresult(request):
         return HttpResponse('Please submit a search form.')
 
 
-def about(request):
-    return render(request, 'auth_app/about.html', {})
-
-
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
@@ -34,11 +31,6 @@ def register(request):
     return render(request, 'auth_app/register.html', {'form': form})
 
 
-# @login_required
-# def profile(request):
-#     return render(request, 'auth_app/profile.html', {})
-
-
 @login_required
 def edit_profile(request):
     if request.method == 'POST':
@@ -48,7 +40,7 @@ def edit_profile(request):
             if form.is_valid():
                 form.save()
                 messages.success(request, f'Your account has been updated')
-                return redirect('profile')
+                return redirect('user-profile', username=request.user.username)
     else:
         form = ProfileUpdateForm(instance=request.user.profile)
     return render(request, 'auth_app/edit_profile.html', {'form': form})
@@ -57,5 +49,33 @@ def edit_profile(request):
 @login_required
 def user(request, username):
     user_obj = get_object_or_404(User, username=username)
-    return render(request, 'auth_app/profile.html', {'user_obj': user_obj})
+    following_own_profile = False
+    if request.user.username == username:
+        following_own_profile = True
+    already_followed = Follow.objects.filter(follower=request.user, following=user_obj)
+    return render(request, 'auth_app/profile.html', {
+        'user_obj': user_obj,
+        'already_followed': already_followed,
+        'following_own_profile': following_own_profile
+    })
+
+
+@login_required
+def follow(request, username):
+    following = get_object_or_404(User, username=username)
+    follower = request.user
+    already_followed = Follow.objects.filter(follower=follower, following=following)
+    if not already_followed:
+        followed_user = Follow(follower=follower, following=following)
+        followed_user.save()
+    return redirect('user-profile', username=username)
+
+
+@login_required
+def unfollow(request, username):
+    following = get_object_or_404(User, username=username)
+    follower = request.user
+    already_followed = Follow.objects.filter(follower=follower, following=following)
+    already_followed.delete()
+    return redirect('user-profile', username=username)
 
