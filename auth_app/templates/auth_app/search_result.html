@@ -4,7 +4,7 @@
 {% block content %}
     <h1>Search Results</h1>
     {% for res in search_result %}
-        <div class="d-flex flex-row align-items-center">
+        <div class="d-flex flex-row align-items-center mb-3">
             <img src="{{ res.profile.profile_pic.url }}" class="rounded-circle" width="100px">
             <a href="{% url 'user-profile' res.username %}"><h2 class="ml-4">{{ res.username }}</h2></a>
         </div>

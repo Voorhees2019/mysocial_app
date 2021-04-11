@@ -23,9 +23,8 @@
                 {% endif %}
             </div>
             <h2 class="text-center font-weight-bold">{{ user_obj.post.count }} Post{{ user_obj.post.count|pluralize }}
-                &nbsp
-                {{ user_obj.follower.count }} Follower{{ user_obj.follower.count|pluralize }} &nbsp
-                {{ user_obj.following.count }} Following{{ user_obj.following.count|pluralize }}</h2>
+                &nbsp {{ user_obj.following.count }} Follower{{ user_obj.following.count|pluralize }} &nbsp
+                {{ user_obj.follower.count }} Following{{ user_obj.follower.count|pluralize }}</h2>
             <h3 class="fullname ml-5">{{ user_obj.profile.full_name }}</h3>
             <h5 class="description">{{ user_obj.profile.description }}</h5>
         </div>
@@ -33,7 +32,7 @@
     <div class="row">
         {% for post in user_obj.post.all %}
             <div class="col-lg-4 col-md-6 col-xs-6 thumb">
-                <a href="" class="">
+                <a href="{% url 'post-detail' post.id %}" class="">
                     <img src="{{ post.image.url }}" class="zoom img-fluid">
                 </a>
             </div>

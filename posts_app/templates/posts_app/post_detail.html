@@ -1,0 +1,58 @@
+{% extends 'auth_app/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <div class="d-flex flex-column col-lg-8 offset-lg-2 col-md-6 offset-md-3 mb-3 pb-3 pt-3 border">
+            <div class="d-flex flex-row align-items-center">
+                <div>
+                    <img src="{{ object.author.profile.profile_pic.url }}" class="rounded-circle" width="50px">
+                </div>
+                <div>
+                    <a href="{% url 'user-profile' object.author.username %}">
+                        <span class="ml-2 font-weight-bold">{{ object.author.username }}</span></a>
+                    <small class="text-muted ml-2">{{ object.date_posted|date:'F d, Y' }}</small>
+                </div>
+            </div>
+            <div>
+                <h1 class="text-center">{{ post.title }}</h1>
+            </div>
+            <div class="text-center">
+                <img src="{{ object.image.url }}" class="img-fluid">
+            </div>
+        </div>
+
+{#    <!-- COMMENTS -->#}
+{##}
+{#    <div class="content-section mt-3">#}
+{#        <form action="" method="POST">#}
+{#            {% csrf_token %}#}
+{#            <fieldset class="form-group">#}
+{#                <legend class="border-bottom mb-3">Leave a comment</legend>#}
+{#                {{ comment_form|crispy }}#}
+{#            </fieldset>#}
+{#            <div class="form-group">#}
+{#                <button class="btn btn-outline-info" type="submit">Post</button>#}
+{#            </div>#}
+{#        </form>#}
+{#    </div>#}
+{##}
+{#    {% if comments %}#}
+{#        <strong class="text-secondary">{{ object.number_of_comments }}#}
+{#            Comment{{ object.number_of_comments|pluralize }}</strong>#}
+{#        <hr>#}
+{#        {% for comment in comments %}#}
+{#            <div class="pl-3 mb-3 border">#}
+{#                <strong class="text-info">{{ comment.name }}</strong>#}
+{#                <small class="text-muted">{{ comment.date_posted|date:'F d, Y' }}</small>#}
+{#                <div class="ml-2">#}
+{#                    <p>{{ comment.content|safe|linebreaks }}</p>#}
+{#                </div>#}
+{#            </div>#}
+{#        {% endfor %}#}
+{#    {% else %}#}
+{#        <strong class="text-secondary">No comments yet...</strong>#}
+{#    {% endif %}#}
+
+{% endblock %}

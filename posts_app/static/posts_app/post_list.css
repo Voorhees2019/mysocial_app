@@ -1,0 +1,25 @@
+.username {
+    font-size: 20px;
+    font-weight: 700;
+    font-family: 'Signika', sans-serif;
+}
+
+.post-img {
+    text-align: center;
+}
+
+.post-img img{
+    max-width: 100%;
+    height: auto;
+    max-height: 80vh;
+    /*-webkit-transition: .2s all;*/
+}
+
+.post-img a img {
+	opacity: 1;
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+.post-img a:hover img {
+	opacity: .5;
+}
