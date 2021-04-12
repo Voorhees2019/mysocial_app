@@ -36,6 +36,8 @@ urlpatterns = [
     path('follow/<str:username>/', auth_views.follow, name='follow'),
     path('unfollow/<str:username>/', auth_views.unfollow, name='unfollow'),
     path('searchresult/', auth_views.searchresult, name='searchresult'),
+    path('like/<int:post_id>', posts_views.like, name='like'),
+    path('unlike/<int:post_id>', posts_views.unlike, name='unlike'),
 
 ]
 

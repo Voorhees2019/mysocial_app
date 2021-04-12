@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from auth_app.models import Follow
-from .models import Post
+from .models import Post, Like
 from django.views.generic import ListView, DetailView
 from .forms import PostForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -58,3 +58,26 @@ class PostListView(LoginRequiredMixin, ListView):
 class PostDetailView(LoginRequiredMixin, DetailView):
     model = Post
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        already_liked = Like.objects.filter(post=self.get_object(), user=self.request.user)
+        context['already_liked'] = already_liked
+        return context
+
+
+@login_required
+def like(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    already_liked = Like.objects.filter(post=post, user=request.user)
+    if not already_liked:
+        post_like = Like(post=post, user=request.user)
+        post_like.save()
+    return redirect('post-detail', pk=post.id)
+
+
+@login_required
+def unlike(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    already_liked = Like.objects.filter(post=post, user=request.user)
+    already_liked.delete()
+    return redirect('post-detail', pk=post.id)
