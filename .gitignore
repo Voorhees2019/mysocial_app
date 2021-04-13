@@ -5,3 +5,5 @@ venv/
 *.sqlite3
 media/profile_pic/
 media/post_images/
+local_settings.py
+staticfiles/
