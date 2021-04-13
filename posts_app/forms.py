@@ -9,9 +9,8 @@ class PostForm(forms.ModelForm):
 
 
 class PostCommentForm(forms.ModelForm):
+    content = forms.CharField(label='', widget=forms.Textarea(attrs={'rows': 5}))
+
     class Meta:
         model = Comment
         fields = ['content']
-        widgets = {
-            'content': forms.Textarea(attrs={'rows': 5})
-        }

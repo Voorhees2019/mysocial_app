@@ -72,7 +72,7 @@
                         Comment{{ object.number_of_comments|pluralize }}</strong>
                     <hr>
                     {% for comment in comments %}
-                        <div class="pl-3 mb-3 border">
+                        <div class="pl-3 pr-3 mb-3 border">
                             <div class="d-flex flex-row align-items-center">
                                 <div class="mr-1">
                                     <img src="{{ comment.user.profile.profile_pic.url }}" class="rounded-circle"
@@ -85,7 +85,7 @@
                                 </div>
                             </div>
                             <div class="ml-2">
-                                <p>{{ comment.content|safe|linebreaks }}</p>
+                                {{ comment.content|safe|linebreaks }}
                             </div>
                         </div>
                     {% endfor %}

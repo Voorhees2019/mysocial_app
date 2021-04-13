@@ -2,5 +2,15 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-    <h1>Home Page</h1>
+    <div class="row align-items-center justify-content-center mt-5" style="height: 70vh">
+        <div class="col-lg-8 text-center">
+            <h1>Share your life!</h1>
+            <h4 style="text-align: justify;">Life is fun and beautiful. There's a million different things you can do
+                and want to share with. This social app allows users to connect with friends, family, and acquaintances
+                across the globe. This social media platform allows users to share photos with each other by posting
+                pictures for their followers, like and comment these posts.</h4>
+            <h3 class="text-center">Your new life awaits.</h3>
+            <a role="button" class="btn btn-primary btn-lg" href="{% url 'register' %}">Join Today</a>
+        </div>
+    </div>
 {% endblock %}

@@ -18,7 +18,7 @@ urlpatterns = [
     path('register/', auth_views.register, name='register'),
     path('login/', django_auth_views.LoginView.as_view(template_name='auth_app/login.html',
                                                        redirect_authenticated_user=True), name='login'),
-    path('logout/', django_auth_views.LogoutView.as_view(template_name='auth_app/logout.html'), name='logout'),
+    path('logout/', django_auth_views.LogoutView.as_view(), name='logout'),
     # password reset
     path('password-reset/',
          django_auth_views.PasswordResetView.as_view(template_name='auth_app/password_reset.html'),
@@ -40,7 +40,6 @@ urlpatterns = [
     path('searchresult/', auth_views.searchresult, name='searchresult'),
     path('like/<int:post_id>', posts_views.like, name='like'),
     path('unlike/<int:post_id>', posts_views.unlike, name='unlike'),
-
 ]
 
 urlpatterns += staticfiles_urlpatterns()
