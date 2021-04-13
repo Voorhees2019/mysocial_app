@@ -23,3 +23,26 @@
 .post-img a:hover img {
 	opacity: .5;
 }
+
+.like:hover{
+    text-decoration: none;
+}
+.like:hover .fa-heart-o,
+.like .fa-heart {
+    display: none;
+}
+.like:hover .fa-heart {
+    display: inline;
+}
+
+.unlike:hover{
+    text-decoration: none;
+}
+
+.unlike:hover .fa-heart,
+.unlike .fa-heart-o {
+    display: none;
+}
+.unlike:hover .fa-heart-o {
+    display: inline;
+}

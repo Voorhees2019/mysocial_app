@@ -12,6 +12,8 @@ urlpatterns = [
     # profile
     path('user/<str:username>/', auth_views.user, name='user-profile'),
     path('edit-profile/', auth_views.edit_profile, name='edit-profile'),
+    path('user/<str:username>/followers/', auth_views.followers, name='followers'),
+    path('user/<str:username>/followings/', auth_views.followings, name='followings'),
     # AUTH
     path('register/', auth_views.register, name='register'),
     path('login/', django_auth_views.LoginView.as_view(template_name='auth_app/login.html',

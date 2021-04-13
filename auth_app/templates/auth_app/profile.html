@@ -24,8 +24,15 @@
                 {% endif %}
             </div>
             <h2 class="text-center font-weight-bold">{{ user_obj.post.count }} Post{{ user_obj.post.count|pluralize }}
-                &nbsp {{ user_obj.following.count }} Follower{{ user_obj.following.count|pluralize }} &nbsp
-                {{ user_obj.follower.count }} Following{{ user_obj.follower.count|pluralize }}</h2>
+                &nbsp {{ user_obj.following.count }}
+                <a href="{% url 'followers' user_obj.username %}">
+                    Follower{{ user_obj.following.count|pluralize }}
+                </a>
+                &nbsp {{ user_obj.follower.count }}
+                <a href="{% url 'followings' user_obj.username %}">
+                    Following{{ user_obj.follower.count|pluralize }}
+                </a>
+                </h2>
             <h3 class="fullname ml-5">{{ user_obj.profile.full_name }}</h3>
             <h5 class="description">{{ user_obj.profile.description }}</h5>
         </div>

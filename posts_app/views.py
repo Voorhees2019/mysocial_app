@@ -1,9 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from auth_app.models import Follow
-from .models import Post, Like
+from .models import Post, Like, Comment
 from django.views.generic import ListView, DetailView
-from .forms import PostForm
+from .forms import PostForm, PostCommentForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 import random
@@ -62,7 +62,26 @@ class PostDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         already_liked = Like.objects.filter(post=self.get_object(), user=self.request.user)
         context['already_liked'] = already_liked
+
+        comments = Comment.objects.filter(post=self.get_object()).order_by('-date_posted')
+        context['comments'] = comments
+
+        context['comment_form'] = PostCommentForm(instance=self.request.user)
         return context
+
+    def post(self, request, *args, **kwargs):
+        if 'addNewPost' in request.POST:
+            post_form = PostForm(request.POST, request.FILES)
+            if post_form.is_valid():
+                post = post_form.save(commit=False)
+                post.author = request.user
+                post.save()
+
+        if 'addNewComment' in request.POST:
+            new_comment = Comment(post=self.get_object(), user=request.user, content=request.POST.get('content'))
+            new_comment.save()
+
+        return self.get(self, request, *args, **kwargs)
 
 
 @login_required

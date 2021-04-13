@@ -18,6 +18,10 @@ class Post(models.Model):
     def number_of_likes(self):
         return Like.objects.filter(post=self).count()
 
+    @property
+    def number_of_comments(self):
+        return Comment.objects.filter(post=self).count()
+
 
 class Like(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='liked_post')
@@ -25,3 +29,13 @@ class Like(models.Model):
 
     def __str__(self):
         return f'{self.user} liked {self.post.title}'
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comment')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='commentator')
+    content = models.TextField()
+    date_posted = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Comment by {self.user} for post {self.post.title}'

@@ -82,3 +82,18 @@ def unfollow(request, username):
     already_followed.delete()
     return redirect('user-profile', username=username)
 
+
+@login_required
+def followers(request, username):
+    user = get_object_or_404(User, username=username)
+    follow_list = Follow.objects.filter(following=user)
+    followers_list = User.objects.filter(pk__in=follow_list.values_list('follower'))
+    return render(request, 'auth_app/following_info.html', {'user_f': user, 'followers': followers_list})
+
+
+@login_required
+def followings(request, username):
+    user = get_object_or_404(User, username=username)
+    follow_list = Follow.objects.filter(follower=user)
+    followings_list = User.objects.filter(pk__in=follow_list.values_list('following'))
+    return render(request, 'auth_app/following_info.html', {'user_f': user, 'followings': followings_list})
