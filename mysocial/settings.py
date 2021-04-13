@@ -140,3 +140,8 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
+
+try:
+    from .local_settings import *
+except ImportError:
+    print(f'Looks like no local file. You must be on production')
